@@ -1,0 +1,72 @@
+[gd_scene load_steps=5 format=3 uid="uid://dexamplemainscene"]
+
+[ext_resource type="Script" path="res://scripts/game.gd" id="1"]
+[ext_resource type="PackedScene" uid="uid://boardscene" path="res://scenes/Board.tscn" id="2"]
+
+[node name="Main" type="Control"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 0
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.05, 0.05, 0.08, 1)
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="GameContainer" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Title" type="Label" parent="HBoxContainer/GameContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Local Chess"
+horizontal_alignment = 1
+
+[node name="Board" parent="HBoxContainer/GameContainer" instance=ExtResource("2")]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="SidePanel" type="VBoxContainer" parent="HBoxContainer"]
+custom_minimum_size = Vector2(280, 0)
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 3
+
+[node name="SANLog" type="RichTextLabel" parent="HBoxContainer/SidePanel"]
+layout_mode = 2
+size_flags_vertical = 3
+bbcode_enabled = true
+text = "[b]Move History[/b]\n"
+scroll_following = true
+
+[node name="Buttons" type="HBoxContainer" parent="HBoxContainer/SidePanel"]
+layout_mode = 2
+
+[node name="NewGame" type="Button" parent="HBoxContainer/SidePanel/Buttons"]
+layout_mode = 2
+text = "New Game"
+
+[node name="DB" type="Node" parent="."]
+script = ExtResource("res://scripts/database.gd")
+
+[node name="Elo" type="Node" parent="."]
+script = ExtResource("res://scripts/elo.gd")
+
+[node name="AudioPlayer" type="AudioStreamPlayer" parent="."]
+
+[connection signal="pressed" from="HBoxContainer/SidePanel/Buttons/NewGame" to="." method="new_game"]

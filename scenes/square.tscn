@@ -1,0 +1,8 @@
+[gd_scene format=3 uid="uid://square"]
+
+[node name="Square" type="Panel"]
+custom_minimum_size = Vector2(80, 80)
+
+[node name="Piece" type="Sprite2D" parent="."]
+centered = false
+scale = Vector2(0.8, 0.8)
