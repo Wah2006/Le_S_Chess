@@ -16,7 +16,6 @@ A **local two-player chess desktop application** built with Godot 4.
 
 ## Screenshots
 
-*(Add screenshots here later)*
 
 ## How to Play
 
@@ -42,14 +41,14 @@ A **local two-player chess desktop application** built with Godot 4.
 
 ## Project Structure
 
-LocalChess/
-├── scenes/           # UI scenes
-├── scripts/          # Game logic
-├── assets/
-│   ├── sprites/      # Piece images
-│   └── sounds/       # Sound effects
-├── main.tscn
-└── project.godot
+### LocalChess/
+### ├── scenes/           # UI scenes
+### ├── scripts/          # Game logic
+### ├── assets/
+### │   ├── sprites/      # Piece images
+### │   └── sounds/       # Sound effects
+### ├── main.tscn
+### └── project.godot
 
 
 ## Future Enhancements
@@ -62,7 +61,7 @@ LocalChess/
 
 ## License
 
-MIT License - Feel free to use and modify.
+GNU License - Feel free to use and modify.
 
 ---
 
