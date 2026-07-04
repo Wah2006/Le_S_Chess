@@ -1,8 +1,8 @@
 # scripts/chess_logic.gd
 extends Node
 
-enum PieceType { EMPTY, PAWN, KNIGHT, BISHOP, ROOK, QUEEN, KING }
-enum PlayerColor { WHITE, BLACK }
+enum PieceType {EMPTY, PAWN, KNIGHT, BISHOP, ROOK, QUEEN, KING}
+enum PlayerColor {WHITE, BLACK}
 
 class ChessPiece:
 	var type: PieceType = PieceType.EMPTY
@@ -13,7 +13,7 @@ var board: Array = []
 var current_turn: PlayerColor = PlayerColor.WHITE
 var move_history: Array = []
 var game_over: bool = false
-var winner: PlayerColor = PlayerColor.WHITE  # Default, will be set properly
+var winner: PlayerColor = PlayerColor.WHITE # Default, will be set properly
 
 signal board_changed
 
@@ -35,7 +35,7 @@ func reset_game():
 	winner = PlayerColor.WHITE
 
 func setup_starting_position():
-	var back = [PieceType.ROOK, PieceType.KNIGHT, PieceType.BISHOP, PieceType.QUEEN, 
+	var back = [PieceType.ROOK, PieceType.KNIGHT, PieceType.BISHOP, PieceType.QUEEN,
 				PieceType.KING, PieceType.BISHOP, PieceType.KNIGHT, PieceType.ROOK]
 	for x in 8:
 		board[0][x] = create_piece(back[x], PlayerColor.BLACK)
@@ -102,35 +102,29 @@ func is_legal_move(from: Vector2i, to: Vector2i) -> bool:
 # Simple implementations (expandable)
 
 func is_legal_pawn_move(from: Vector2i, to: Vector2i, color: PlayerColor) -> bool:
-
 	var dir = -1 if color == PlayerColor.WHITE else 1
 
 	var start_rank = 6 if color == PlayerColor.WHITE else 1
 
 	
-
 	# Normal move
 
 	if to.x == from.x and to.y == from.y + dir and not get_piece(to):
-
 		return true
 
 	# Double move
 
-	if to.x == from.x and from.y == start_rank and to.y == from.y + 2*dir and not get_piece(to):
-
+	if to.x == from.x and from.y == start_rank and to.y == from.y + 2 * dir and not get_piece(to):
 		return true
 
 	# Capture
 
 	if abs(to.x - from.x) == 1 and to.y == from.y + dir and get_piece(to):
-
 		return true
 
 	return false
 
 func is_legal_knight_move(from: Vector2i, to: Vector2i) -> bool:
-
 	var dx = abs(to.x - from.x)
 
 	var dy = abs(to.y - from.y)
@@ -138,23 +132,19 @@ func is_legal_knight_move(from: Vector2i, to: Vector2i) -> bool:
 	return (dx == 1 and dy == 2) or (dx == 2 and dy == 1)
 
 func is_legal_bishop_move(from: Vector2i, to: Vector2i) -> bool:
-
 	if abs(to.x - from.x) != abs(to.y - from.y): return false
 
 	return is_path_clear(from, to)
 
 func is_legal_rook_move(from: Vector2i, to: Vector2i) -> bool:
-
 	if from.x != to.x and from.y != to.y: return false
 
 	return is_path_clear(from, to)
 
 func is_legal_king_move(from: Vector2i, to: Vector2i) -> bool:
-
 	return abs(to.x - from.x) <= 1 and abs(to.y - from.y) <= 1
 
 func is_path_clear(from: Vector2i, to: Vector2i) -> bool:
-
 	var dx = sign(to.x - from.x)
 
 	var dy = sign(to.y - from.y)
@@ -164,7 +154,6 @@ func is_path_clear(from: Vector2i, to: Vector2i) -> bool:
 	var y = from.y + dy
 
 	while x != to.x or y != to.y:
-
 		if get_piece(Vector2i(x, y)): return false
 
 		x += dx
@@ -174,15 +163,12 @@ func is_path_clear(from: Vector2i, to: Vector2i) -> bool:
 	return true
 
 func get_piece(pos: Vector2i) -> ChessPiece:
-
 	if not is_valid_pos(pos): return null
 
 	return board[pos.y][pos.x]
 
 func is_valid_pos(pos: Vector2i) -> bool:
-
 	return pos.x >= 0 and pos.x < 8 and pos.y >= 0 and pos.y < 8
-
 
 
 func generate_basic_san(_from: Vector2i, to: Vector2i, _captured: bool) -> String:
@@ -198,9 +184,7 @@ func generate_basic_san(_from: Vector2i, to: Vector2i, _captured: bool) -> Strin
 	return letter + files[to.x] + str(8 - to.y)
 
 func check_game_over():
-	pass  # Expand later
-
-
+	pass # Expand later
 
 
 func has_piece_at(pos: Vector2i) -> bool:

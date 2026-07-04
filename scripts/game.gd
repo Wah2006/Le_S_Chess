@@ -36,12 +36,12 @@ func _on_square_clicked(pos: Vector2i):
 			board_node.update_board(chess_logic.board)
 			san_log.append_text(san + "\n")
 			play_sound("move")
-			
+
 			if chess_logic.game_over:
 				end_game()
 		else:
 			show_alert("Illegal move!")
-		
+
 		chess_logic.selected_pos = Vector2i(-1, -1)
 		board_node.clear_highlights()
 
@@ -51,18 +51,18 @@ func end_game():
 		winner_id = player1_id
 	elif chess_logic.winner == chess_logic.PlayerColor.BLACK:
 		winner_id = player2_id
-	
+
 	var white_elo = 1200.0
 	var black_elo = 1200.0
 	var score_white = 1.0 if winner_id == player1_id else 0.0 if winner_id == player2_id else 0.5
-	
+
 	var new_white = elo_manager.calculate_new_elo(white_elo, black_elo, score_white)
 	var new_black = elo_manager.calculate_new_elo(black_elo, white_elo, 1.0 - score_white)
-	
+
 	db.update_elo(player1_id, new_white)
 	db.update_elo(player2_id, new_black)
 	db.save_game(player1_id, player2_id, winner_id, chess_logic.move_history)
-	
+
 	show_alert("Game Over!\n" + ("White Wins!" if winner_id == 1 else "Black Wins!" if winner_id == 2 else "Draw!"))
 
 func play_sound(_type: String):
